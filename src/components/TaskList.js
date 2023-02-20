@@ -63,12 +63,12 @@ const TaskList = () => {
     getUserList();
   }, []);
 
-  const handleChange = (e) => {
-    setTask((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  };
+  // const handleChange = (e) => {
+  //   setTask((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  // };
 
   // Creating a task/list
-  const addNewTask = async () => {
+  const addNewTask = async (task) => {
     try {
       const formdata = new FormData();
       formdata.append("message", task.message);
@@ -92,41 +92,41 @@ const TaskList = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e, task) => {
     e.preventDefault();
-    addNewTask();
-    updateTask();
+    addNewTask(task);
+    // updateTask();
     setOpen(false);
   };
 
   // Update API
-  const updateTask = async () => {
-    console.log("Update task");
+  // const updateTask = async () => {
+  //   console.log("Update task");
 
-    try {
-      const formdata = new FormData();
-      formdata.append("message", tasks.message);
-      formdata.append("due_date", tasks.dueDate);
-      formdata.append("priority", tasks.priority);
-      formdata.append("assigned_to", tasks.assignedTo);
-      formdata.append("taskid", task.id);
+  //   try {
+  //     const formdata = new FormData();
+  //     formdata.append("message", tasks.message);
+  //     formdata.append("due_date", tasks.dueDate);
+  //     formdata.append("priority", tasks.priority);
+  //     formdata.append("assigned_to", tasks.assignedTo);
+  //     formdata.append("taskid", task.id);
 
-      const requestOptions = {
-        method: "POST",
-        headers: {
-          AuthToken: AUTH_TOKEN,
-        },
-        body: formdata,
-        redirect: "follow",
-      };
+  //     const requestOptions = {
+  //       method: "POST",
+  //       headers: {
+  //         AuthToken: AUTH_TOKEN,
+  //       },
+  //       body: formdata,
+  //       redirect: "follow",
+  //     };
 
-      await fetch("https://devza.com/tests/tasks/update", requestOptions);
+  //     await fetch("https://devza.com/tests/tasks/update", requestOptions);
 
-      getTasksLists();
-    } catch (error) {
-      console.log("Error is ", error);
-    }
-  };
+  //     getTasksLists();
+  //   } catch (error) {
+  //     console.log("Error is ", error);
+  //   }
+  // };
 
   return (
     <div>
@@ -166,8 +166,6 @@ const TaskList = () => {
         open={open}
         onCloseModal={onCloseModal}
         handleSubmit={handleSubmit}
-        handleChange={handleChange}
-        task={tasks}
         users={users}
       />
     </div>

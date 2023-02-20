@@ -1,14 +1,19 @@
 import "react-responsive-modal/styles.css";
 import { Modal } from "react-responsive-modal";
+import { useState } from "react";
 
-const Dialog = ({
-  open,
-  onCloseModal,
-  handleSubmit,
-  handleChange,
-  tasks,
-  users,
-}) => {
+const Dialog = ({ open, onCloseModal, handleSubmit, users }) => {
+  const [task, setTask] = useState({
+    message: "",
+    assignedTo: "",
+    priority: "",
+    dueDate: "",
+  });
+
+  const handleChange = (e) => {
+    setTask((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
   return (
     <div>
       <Modal
@@ -27,7 +32,7 @@ const Dialog = ({
             placeholder="Enter Your Message"
             className="enter-your-message"
             onChange={handleChange}
-            value={task?.assignedTo}
+            value={task?.message}
           />
           <div className="dropdown">
             <div className="dropdown-1">
@@ -69,7 +74,7 @@ const Dialog = ({
               onChange={handleChange}
             />
           </div>
-          <button className="add-task-btn" onClick={handleSubmit}>
+          <button className="add-task-btn" onClick={(e) => handleSubmit(e, task)}>
             Add Task
           </button>
         </form>
@@ -77,5 +82,4 @@ const Dialog = ({
     </div>
   );
 };
-
 export default Dialog;
